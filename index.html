@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Bunny Image</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <img id="bunny-image" src="" alt="Random Bunny Image">
+
+    <script>
+        const bunnyImage = document.getElementById('bunny-image');
+
+        // Function to fetch a random bunny image from an API
+        function getRandomBunnyImage() {
+            fetch('https://api.bunnies.io/v2/loop/random/?media=gif,png')
+                .then(response => response.json())
+                .then(data => {
+                    const imageUrl = data.media.gif || data.media.png;
+                    bunnyImage.src = imageUrl;
+                    bunnyImage.alt = 'Random Bunny Image';
+                })
+                .catch(error => console.error('Error fetching bunny image:', error));
+        }
+
+        // Initialize the page with a random bunny image
+        getRandomBunnyImage();
+
+        // Add an event listener to change the image on page refresh
+        window.addEventListener('load', getRandomBunnyImage);
+    </script>
+</body>
+</html>
